@@ -1,30 +1,31 @@
 class Game
 
     attr_accessor :human_player, :ennemies
+    
 
     def initialize(name)
+        @wanted = ["Quinten", "Léo", "Rayan", "John", "Jean", "Jarett", "Pipo", "Ali", "Marc", "Renaud"]
         @human_player = HumanPlayer.new(name)
         player_1 = Player.new("Guillaume")
         player_2 = Player.new("Fayssal")
         player_3 = Player.new("Tonio")
         player_4 = Player.new("Nathanaël")
-        @ennemies = [player_1, player_2, player_3, player_4]
+        @ennemies_in_sight = [player_1,player_2, player_3, player_4]
     end
 
     def kill_player(i)
-        @ennemies.delete_at(i)
+        @ennemies_in_sight.delete_at(i)
     end
 
     def is_still_ongoing?
-        return !@ennemies.empty? || !@human_player.is_dead?
+        return !@ennemies_in_sight.empty? || !@human_player.is_dead?
     end
 
     def show_players
         @human_player.show_state
-        for ennemy in @ennemies
+        for ennemy in @ennemies_in_sight
             ennemy.show_state
         end
-
     end
 
     def menu
@@ -33,8 +34,8 @@ class Game
         puts "a - Chercher une meilleure arme"
         puts "s - Chercher à se soigner "
         puts "Ou attaquer un joueur en vue :"
-        for ennemy in @ennemies
-            print "#{@ennemies.find_index(ennemy)} - "
+        for ennemy in @ennemies_in_sight
+            print "#{@ennemies_in_sight.find_index(ennemy)} - "
             ennemy.show_state
         end
         print ">"
@@ -42,31 +43,32 @@ class Game
     end
 
     def menu_choice(input)
-        if is_still_ongoing?
             case input
             when "a"
                 @human_player.search_weapon
             when "s"
                 @human_player.search_health_pack 
-            when /[0-3]/
-                i = input.to_i
-                @human_player.attacks(@ennemies[i])
-                if @ennemies[i].is_dead?
-                    kill_player(i)
-                end
             else
-                menu_choice(menu)                    
+                i = input.to_i
+                case i
+                when  0..20
+                @human_player.attacks(@ennemies_in_sight[i])
+                    if @ennemies_in_sight[i].is_dead?
+                        kill_player(i)
+                    end
+                else
+                    puts "Euuuuh.. je n'ai pas compris!"
+                    menu_choice(menu)
+                end                 
             end
-        else
-            game_ending
-        end
     end
 
     def enemies_attack
-        for ennemy in @ennemies
+        for ennemy in @ennemies_in_sight
             ennemy.attacks(@human_player)
             if @human_player.is_dead?
                 game_ending
+                break
             end
         end
     end
@@ -74,9 +76,27 @@ class Game
     def game_ending
         if @human_player.is_dead?
             puts "Tu as été tué! La partie est terminée. TRY AGAIN"
-        else
-            puts "Tu as tué tous les adversaires. La partie est terminée!"
+        elsif @ennemies_in_sight == []
+            puts "Bien ouéj :) Tu as tué tous les adversaires, la partie est terminée!"
         end
-        
+    end
+
+    def new_players_in_sight
+        if @wanted != []
+            de = rand(1..6)
+            case de
+            when 1
+                puts "Ouf, pas de nouvel ennemi!"
+                puts ""
+            when 2..5
+                @ennemies_in_sight << Player.new(@wanted.pop)
+                puts "Oulaaa, un nouvel ennemi a rejoint les adversaires..."
+            else
+                @ennemies_in_sight << Player.new(@wanted.pop)
+                @ennemies_in_sight << Player.new(@wanted.pop)
+                puts "Attention, deux nouveaux ennemis en vue!!"
+            end
+        end
     end
 end
+

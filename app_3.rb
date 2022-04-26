@@ -18,6 +18,12 @@ while my_game.is_still_ongoing?
     puts "Les autres joueurs t'attaquent !!"
     gets
     my_game.enemies_attack
+    if my_game.human_player.is_dead?
+        break
+    end
     gets
     my_game.show_players
+    gets
+    my_game.new_players_in_sight
 end
+my_game.game_ending
