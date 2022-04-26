@@ -19,15 +19,15 @@ player_2 = Player.new("Guillaume")
 # Game.new(player_1,player_2)
 
 while !player_1.is_dead? && !player_2.is_dead?
-            puts "voici l'état de nos joueurs :"
-            player_1.show_state
-            player_2.show_state
-            puts
-            puts "Passons à la phase d'attaque :"
-            player_1.attacks(player_2)
-            if player_2.is_dead?
-                break
-            end
-            player_2.attacks(player_1)
-            puts
+        puts "voici l'état de nos joueurs :"
+        player_1.show_state
+        player_2.show_state
+        puts
+        puts "Passons à la phase d'attaque :"
+        player_1.attacks(player_2)
+        if player_2.is_dead?
+            break
         end
+        player_2.attacks(player_1)
+        puts
+end

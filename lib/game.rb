@@ -86,7 +86,7 @@ class Game
             de = rand(1..6)
             case de
             when 1
-                puts "Ouf, pas de nouvel ennemi en vue!"
+                puts "Ouf, pas de nouveau relou en vue!"
                 puts ""
             when 2..5
                 @ennemies_in_sight << Player.new(@wanted.pop)
@@ -94,7 +94,7 @@ class Game
             else
                 @ennemies_in_sight << Player.new(@wanted.pop)
                 @ennemies_in_sight << Player.new(@wanted.pop)
-                puts "Attention, deux nouveaux ennemis en vue!!"
+                puts "Attention, deux nouveaux prédateurs en vue!!"
             end
         end
     end
