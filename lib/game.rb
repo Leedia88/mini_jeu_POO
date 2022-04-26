@@ -32,8 +32,8 @@ class Game
         puts
         puts "Quelle action veux-tu effectuer ?"
         puts "a - Chercher une meilleure arme"
-        puts "s - Chercher à se soigner "
-        puts "Ou attaquer un joueur en vue :"
+        puts "s - Chercher un kit de survie"
+        puts "Ou attaquer un ennemi en vue :"
         for ennemy in @ennemies_in_sight
             print "#{@ennemies_in_sight.find_index(ennemy)} - "
             ennemy.show_state
@@ -77,7 +77,7 @@ class Game
         if @human_player.is_dead?
             puts "Tu as été tué! La partie est terminée. TRY AGAIN"
         elsif @ennemies_in_sight == []
-            puts "Bien ouéj :) Tu as tué tous les adversaires, la partie est terminée!"
+            puts "Bien ouéj :) Tu as tué tous tes ex, la partie est terminée!"
         end
     end
 
@@ -86,11 +86,11 @@ class Game
             de = rand(1..6)
             case de
             when 1
-                puts "Ouf, pas de nouvel ennemi!"
+                puts "Ouf, pas de nouvel ennemi en vue!"
                 puts ""
             when 2..5
                 @ennemies_in_sight << Player.new(@wanted.pop)
-                puts "Oulaaa, un nouvel ennemi a rejoint les adversaires..."
+                puts "Oulaaa, un amant du passé a ressurgi ..."
             else
                 @ennemies_in_sight << Player.new(@wanted.pop)
                 @ennemies_in_sight << Player.new(@wanted.pop)

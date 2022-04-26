@@ -7,7 +7,7 @@ require_relative 'lib/human_player'
 
 #####################  GAME  #####################
 puts "-" * 50
-puts "|Bienvenue dans STARDUST VALLEIIII               |"
+puts "|Bienvenue dans STARDUST VALLEY             |"
 puts "|Le but du jeu est d'être le dernier survivant ! |"
 puts "-"*50
 print "quel est ton prénom? >"
